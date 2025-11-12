@@ -2,13 +2,7 @@ from prettytable import PrettyTable
 from akun import akun
 
 data_akun = []
-
-def tambah_akun_customer():
-	return
-
-def tambah_akun_driver():
-	return
-
+    
 def hapus_akun(username):
     for akun in data_akun:
         if akun["username"] == username:
@@ -33,21 +27,102 @@ def edit_profil(username, password, nama_lengkap=None, umur=None, no_telepon=Non
             return
     print("Username atau password salah. Profil tidak dapat diperbarui.")
 
-def tampilkan_daftar_akun():
-	table = PrettyTable()
-	table.field_names = ["Username", "Nama Lengkap", "Umur", "No. Telp", "Email", "Role"]
-	for username, data in akun.items():
-		table.add_row([
-			username,
-			data["nama_lengkap"],
-			data["umur"],
-			data["nomor_telepon"],
-			data["alamat_email"],
-			data["role"]
-		])
-	print("===DAFTAR AKUN GO-SIMPY===")
-	print(table)
-	input("Tekan Enter untuk kembali...")
+def buat_akun():
+    print("=== Buat Akun Baru ===")
+    username = input("Masukkan username: ")
+    password = input("Masukkan password: ")
+    nama_lengkap = input("Masukkan nama lengkap: ")
+    umur = input("Masukkan umur: ")
+    nomor_telepon = input("Masukkan nomor telepon: ")
+    alamat_email = input("Masukkan alamat email: ")
 
-def dapatkan_data_akun(username):
-	return akun.get(username)
+    for a in data_akun:
+        if a["username"] == username:
+            print("Username sudah digunakan. Gunakan username lain.")
+            return
+
+    akun_baru = {
+        "username": username,
+        "password": password,
+        "nama_lengkap": nama_lengkap,
+        "umur": umur,
+        "nomor_telepon": nomor_telepon,
+        "alamat_email": alamat_email
+    }
+
+    data_akun.append(akun_baru)
+    print(f"Akun '{username}' berhasil dibuat!")
+
+def lihat_daftar_akun():
+    print("=== Daftar Akun ===")
+    
+    if not data_akun: 
+        print("Belum ada akun yang terdaftar.")
+        return
+
+    tabel = PrettyTable()
+    tabel.field_names = ["Username", "Nama Lengkap", "Umur", "Nomor Telepon", "Alamat Email"]
+
+    for akun in data_akun:
+        tabel.add_row([
+            akun["username"],
+            akun["nama_lengkap"],
+            akun["umur"],
+            akun["nomor_telepon"],
+            akun["alamat_email"]
+        ])
+
+    print(tabel)
+
+def registrasi_customer():
+    print("=== Registrasi Customer ===")
+    username = input("Masukkan username: ")
+    password = input("Masukkan password: ")
+    nama_lengkap = input("Masukkan nama lengkap: ")
+    umur = input("Masukkan umur: ")
+    nomor_telepon = input("Masukkan nomor telepon: ")
+    alamat_email = input("Masukkan alamat email: ")
+
+    for a in data_akun:
+        if a["username"] == username:
+            print("Username sudah digunakan. Gunakan username lain.")
+            return
+
+    akun_customer = {
+        "username": username,
+        "password": password,
+        "nama_lengkap": nama_lengkap,
+        "umur": umur,
+        "nomor_telepon": nomor_telepon,
+        "alamat_email": alamat_email
+    }
+
+    data_akun.append(akun_customer)
+    print(f"Akun customer {username} berhasil dibuat!")
+
+
+def registrasi_driver():
+    print("=== Registrasi Driver ===")
+    username = input("Masukkan username: ")
+    password = input("Masukkan password: ")
+    nama_lengkap = input("Masukkan nama lengkap: ")
+    umur = input("Masukkan umur: ")
+    nomor_telepon = input("Masukkan nomor telepon: ")
+    alamat_email = input("Masukkan alamat email: ")
+
+    for a in data_akun:
+        if a["username"] == username:
+            print("Username sudah digunakan. Gunakan username lain.")
+            return
+
+    akun_driver = {
+        "username": username,
+        "password": password,
+        "nama_lengkap": nama_lengkap,
+        "umur": umur,
+        "nomor_telepon": nomor_telepon,
+        "alamat_email": alamat_email
+    }
+
+    data_akun.append(akun_driver)
+    print(f"Akun driver {username} berhasil dibuat!")
