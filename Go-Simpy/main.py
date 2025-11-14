@@ -1,10 +1,10 @@
 import sys
 
 from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
-from manajemen_akun import (edit_profil, tambah_akun_customer, tambah_akun_driver, hapus_akun, dapatkan_data_akun)
+from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
 
-def menu_admin():
+def pilihan_menu_admin():
 	while True:
 		tampilkan_menu_utama()
 		pilihan = input("Pilih menu: ").strip()
@@ -13,19 +13,20 @@ def menu_admin():
 			edit_profil()
 
 		elif pilihan == "2":
-			tambah_akun_customer()
+			buat_akun_customer()
 
 		elif pilihan == "3":
-			tambah_akun_driver()
+			buat_akun_driver()
 
 		elif pilihan == "4":
 			hapus_akun()
 
-		elif pilian == "5":
+		elif pilihan == "5":
 			tampilkan_daftar_akun()
 	
 		elif pilihan == "6":
 			logout()
+			break
 
 		elif pilihan == "7":
 			print("Terimakasih telah menggunakan program ini.")
@@ -34,10 +35,36 @@ def menu_admin():
 		else:
 			print("Pilihan tidak valid")
 			input("Tekan Enter untuk kembali")
+
+def pilihan_menu_customer():
+	while True:
+		tampilkan_menu_utama()
+		pilihan = input("Pilih menu: ").strip()
+		
+		if pilihan == "1":
+			edit_profil()
+
+		elif pilihan == "2":
+			cek_saldo()
+
+		elif pilihan == "3":
+			pesan_ojol()
+
+		elif pilihan == "4":
+			logout()
+			break
+		
+		elif pilihan == "5":
+			print("Terimakasih telah menggunakan program ini.")
+			sys.exit()
+		
+		else:
+			print("Pilihan tidak valid")
+			input("Tekan Enter untuk kembali")
 	
 if __name__ == "__main__":
 	while True:
-		if apakah_sudah_login() == False: 
+		if not apakah_sudah_login(): 
 			tampilkan_menu_login()
 			pilihan = input("Pilih menu: ")
 
@@ -45,9 +72,12 @@ if __name__ == "__main__":
 				login()
 			
 			elif pilihan == "2":
-				registrasi()
-			
+				buat_akun_customer()
+
 			elif pilihan == "3":
+				buat_akun_driver()
+			
+			elif pilihan == "4":
 				print("Terimakasih telah menggunakan program ini.")
 				sys.exit()
 			
@@ -60,13 +90,10 @@ if __name__ == "__main__":
 			role = dapatkan_data_akun(username)["role"]
 
 			if role == "admin":
-				menu_admin()
+				pilihan_menu_admin()
 
-			elif role == "manager":
-				menu_manager()
-
-			elif role == "pelanggan":
-				menu_customer()
+			elif role == "customer":
+				pilihan_menu_customer()
 
 			elif role == "driver":
-				menu_driver()
+				pilihan_menu_driver()
