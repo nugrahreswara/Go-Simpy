@@ -1,128 +1,202 @@
 from prettytable import PrettyTable
 from akun import akun
+from validasi_input import validasi_input_email
+from validasi_input import validasi_input_umur
 
-data_akun = []
-    
-def hapus_akun(username):
-    for akun in data_akun:
-        if akun["username"] == username:
-            data_akun.remove(akun)
-            print(f"Akun '{username}' berhasil dihapus.")
-            return
-    print(f"Akun dengan username {username} tidak ditemukan.")
+def hapus_akun():
+	username = input("Masukkan username akun yang akan dihapus: ")
 
-def edit_profil(username, password, nama_lengkap=None, umur=None, no_telepon=None, alamat_email=None):
-    for akun in data_akun:
-        if akun["username"] == username and akun["password"] == password:
-            if nama_lengkap:
-                akun["nama_lengkap"] = nama_lengkap
-            if umur:
-                akun["umur"] = umur
-            if no_telepon:
-                akun["nomor_telepon"] = no_telepon
-            if alamat_email:
-                akun["alamat_email"] = alamat_email
+	if username in akun:
+		print(f"Akun {username} berhasil dihapus!")
+		input("Tekan Enter untuk melanjutkan...")
+		del akun[username] 
 
-            print(f"Profil akun {username} berhasil diperbarui.")
-            return
-    print("Username atau password salah. Profil tidak dapat diperbarui.")
+	else:
+		print("Username tidak ditemukan!")
+		input("Tekan Enter untuk melanjutkan...")
 
-def buat_akun():
-    print("=== Buat Akun Baru ===")
-    username = input("Masukkan username: ")
-    password = input("Masukkan password: ")
-    nama_lengkap = input("Masukkan nama lengkap: ")
-    umur = input("Masukkan umur: ")
-    nomor_telepon = input("Masukkan nomor telepon: ")
-    alamat_email = input("Masukkan alamat email: ")
+	return
+	
+def edit_profil():
+	# Disini edit profil
+	return
 
-    for a in data_akun:
-        if a["username"] == username:
-            print("Username sudah digunakan. Gunakan username lain.")
-            return
+def tampilkan_daftar_akun():
+	if not akun.items(): 
+		print("Belum ada akun yang terdaftar.")
+		input("Tekan Enter untuk kembali...")
 
-    akun_baru = {
-        "username": username,
-        "password": password,
-        "nama_lengkap": nama_lengkap,
-        "umur": umur,
-        "nomor_telepon": nomor_telepon,
-        "alamat_email": alamat_email
-    }
+	table = PrettyTable()
+	table.field_names = ["Username", "Nama Lengkap", "Umur", "Nomor Telepon", "Alamat Email", "Role"]
 
-    data_akun.append(akun_baru)
-    print(f"Akun '{username}' berhasil dibuat!")
+	for uname, data_akun in akun.items():
+		table.add_row([
+			uname,
+			data_akun["nama_lengkap"],
+			data_akun["umur"],
+			data_akun["nomor_telepon"],
+			data_akun["alamat_email"],
+			data_akun["role"]
+		])
 
-def lihat_daftar_akun():
-    print("=== Daftar Akun ===")
-    
-    if not data_akun: 
-        print("Belum ada akun yang terdaftar.")
-        return
+	print("\n=== DAFTAR AKUN ===")
+	print(table)
+	input("Tekan Enter untuk melanjutkan...")
+	return
 
-    tabel = PrettyTable()
-    tabel.field_names = ["Username", "Nama Lengkap", "Umur", "Nomor Telepon", "Alamat Email"]
+def buat_akun_customer():
+	print("=== Registrasi Customer ===")
 
-    for akun in data_akun:
-        tabel.add_row([
-            akun["username"],
-            akun["nama_lengkap"],
-            akun["umur"],
-            akun["nomor_telepon"],
-            akun["alamat_email"]
-        ])
+	username = input("Masukkan username: ")
+	if not username:
+		print("Username tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
 
-    print(tabel)
+	if len(username) < 3:
+		print("Username terlalu pandek!, minimal 3 karakter")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	if len(username) > 15:
+		print("Username terlalu panjang!, maksimal 15 karakter")
+		input("Tekan Enter untuk kembali...")
+		return
 
-def registrasi_customer():
-    print("=== Registrasi Customer ===")
-    username = input("Masukkan username: ")
-    password = input("Masukkan password: ")
-    nama_lengkap = input("Masukkan nama lengkap: ")
-    umur = input("Masukkan umur: ")
-    nomor_telepon = input("Masukkan nomor telepon: ")
-    alamat_email = input("Masukkan alamat email: ")
+	if akun_ada(username):
+		print("Username sudah ada")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	password = input("Masukkan password: ")
+	if not password:
+		print("Password tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
 
-    for a in data_akun:
-        if a["username"] == username:
-            print("Username sudah digunakan. Gunakan username lain.")
-            return
+	nama_lengkap = input("Masukkan nama lengkap: ")
+	if not nama_lengkap:
+		print("Nama lengkap tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	umur = input("Masukkan umur: ")
+	if not umur:
+		print("Umur tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
 
-    akun_customer = {
-        "username": username,
-        "password": password,
-        "nama_lengkap": nama_lengkap,
-        "umur": umur,
-        "nomor_telepon": nomor_telepon,
-        "alamat_email": alamat_email
-    }
+	if not validasi_input_umur(umur):
+		print("Umur tidak valid!")
+		input("Tekan Enter untuk kembali...")
+		return
+		
+	nomor_telepon = input("Masukkan nomor telepon: ")
+	if not nomor_telepon:
+		print("Nomor telepon tidak boleh kosong")
+		return
 
-    data_akun.append(akun_customer)
-    print(f"Akun customer {username} berhasil dibuat!")
+	alamat_email = input("Masukkan alamat email: ")
+	if not alamat_email:
+		print("Alamat email tidak boleh kosong")
+		return
 
+	if not validasi_input_email(alamat_email):
+		print("Format E-Mail tidak valid!\nContoh format yang benar: user@example.com")
+		return
 
-def registrasi_driver():
-    print("=== Registrasi Driver ===")
-    username = input("Masukkan username: ")
-    password = input("Masukkan password: ")
-    nama_lengkap = input("Masukkan nama lengkap: ")
-    umur = input("Masukkan umur: ")
-    nomor_telepon = input("Masukkan nomor telepon: ")
-    alamat_email = input("Masukkan alamat email: ")
+	akun[username] = {
+		"password" : password,
+		"nama_lengkap" : nama_lengkap,
+		"umur" : umur,
+		"nomor_telepon" : nomor_telepon,
+		"alamat_email" : alamat_email,
+		"role" : "customer"
+	}
+	
+	print(f"Akun customer berhasil dibuat!, Silahkan login")
+	input("Tekan Enter untuk melanjutkan")
+	return
 
-    for a in data_akun:
-        if a["username"] == username:
-            print("Username sudah digunakan. Gunakan username lain.")
-            return
+def buat_akun_driver():
+	print("=== Registrasi Driver ===")
+	username = input("Masukkan username: ")
+	if not username:
+		print("Username tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
 
-    akun_driver = {
-        "username": username,
-        "password": password,
-        "nama_lengkap": nama_lengkap,
-        "umur": umur,
-        "nomor_telepon": nomor_telepon,
-        "alamat_email": alamat_email
-    }
+	if akun_ada(username):
+		print("Username sudah ada")
+		input("Tekan Enter untuk kembali...")
+		return
 
-    data_akun.append(akun_driver)
-    print(f"Akun driver {username} berhasil dibuat!")
+	if len(username) < 3:
+		print("Username terlalu pandek!, minimal 3 karakter")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	if len(username) > 15:
+		print("Username terlalu panjang!, maksimal 15 karakter")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	password = input("Masukkan password: ")
+	if not password:
+		print("Password tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	nama_lengkap = input("Masukkan nama lengkap: ")
+	if not nama_lengkap:
+		print("Nama lengkap tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	umur = input("Masukkan umur: ")
+	if not umur:
+		print("Umur tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	if not validasi_input_umur(umur):
+		print("Umur tidak valid!")
+		input("Tekan Enter untuk kembali...")
+		return
+
+		
+	nomor_telepon = input("Masukkan nomor telepon: ")
+	if not nomor_telepon:
+		print("Nomor telepon tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	alamat_email = input("Masukkan alamat email: ")
+	if not alamat_email:
+		print("Alamat email tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	if not validasi_input_email(alamat_email):
+		print("Format E-Mail tidak valid!\nContoh format yang benar: user@example.com")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	akun[username] = {
+		"password" : password,
+		"nama_lengkap" : nama_lengkap,
+		"umur" : umur,
+		"nomor_telepon" : nomor_telepon,
+		"alamat_email" : alamat_email,
+		"role" : "driver"
+	}
+	
+	print(f"Akun customer berhasil dibuat! Silahkan login")
+	input("Tekan Enter untuk kembali...")
+	return
+
+def dapatkan_data_akun(username):
+	return akun.get(username)
+
+def akun_ada(username):
+	return username in akun
