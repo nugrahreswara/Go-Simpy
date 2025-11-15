@@ -42,7 +42,7 @@ def tampilkan_menu_utama(role):
         print(LINE)
 
     elif role == "customer":
-        print("   MENU CUSTOMER")
+        print(" 	MENU CUSTOMER")
         print(LINE)
         print(f"{BULLET} 1. Edit Profil")
         print(f"{BULLET} 2. Cek Saldo")
