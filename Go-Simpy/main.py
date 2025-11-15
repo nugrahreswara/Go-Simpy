@@ -4,11 +4,18 @@ from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
 from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
 
+def cek_saldo():
+	print("Fitur cek saldo belum diimplementasikan.")
+	input("Tekan Enter untuk kembali")
+
+def pesan_ojol():
+	print("Fitur pesan ojol belum diimplementasikan.")
+	input("Tekan Enter untuk kembali")
+
 def pilihan_menu_admin():
 	while True:
 		tampilkan_menu_utama()
 		pilihan = input("Pilih menu: ").strip()
-
 		if pilihan == "1":
 			edit_profil()
 
@@ -38,7 +45,7 @@ def pilihan_menu_admin():
 
 def pilihan_menu_customer():
 	while True:
-		tampilkan_menu_utama()
+		tampilkan_menu_utama(role)
 		pilihan = input("Pilih menu: ").strip()
 		
 		if pilihan == "1":
@@ -58,6 +65,32 @@ def pilihan_menu_customer():
 			print("Terimakasih telah menggunakan program ini.")
 			sys.exit()
 		
+		else:
+			print("Pilihan tidak valid")
+			input("Tekan Enter untuk kembali")
+
+def pilihan_menu_driver():
+	while True:
+		tampilkan_menu_utama()
+		pilihan = input("Pilih menu: ").strip()
+
+		if pilihan == "1":
+			edit_profil()
+
+		elif pilihan == "2":
+			cek_saldo()
+
+		elif pilihan == "3":
+			pesan_ojol()
+
+		elif pilihan == "4":
+			logout()
+			break
+
+		elif pilihan == "5":
+			print("Terimakasih telah menggunakan program ini.")
+			sys.exit()
+
 		else:
 			print("Pilihan tidak valid")
 			input("Tekan Enter untuk kembali")

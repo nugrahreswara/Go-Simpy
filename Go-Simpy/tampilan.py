@@ -1,49 +1,62 @@
-# Import Library
+
 import os
 
-# Import file
-from akun import akun
-from prettytable import PrettyTable
-from autentikasi import (apakah_sudah_login, apa_akun_sekarang)
-from manajemen_akun import dapatkan_data_akun
+LINE = "────────────────────────────────────────────"
+DOUBLE_LINE = "============================================"
+BULLET = "›"
 
 def bersihkan_layar():
-	os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def banner(text):
+    print(DOUBLE_LINE)
+    print(text.center(44))
+    print(DOUBLE_LINE)
+
 
 def tampilkan_menu_login():
-	bersihkan_layar()
-	print("Menu Login")
-	print("1. Login")
-	print("2. Registrasi Customer")
-	print("3. Registrasi Driver")
-	print("4. Keluar Program")
+    bersihkan_layar()
+    banner("MENU LOGIN")
 
-def tampilkan_menu_utama():
-	bersihkan_layar()
-	username = apa_akun_sekarang()
-	data_akun = dapatkan_data_akun(username) 	
-	print(f"Selamat datang, {data_akun['nama_lengkap']} ({username})")
+    print(f"{BULLET} 1. Login")
+    print(f"{BULLET} 2. Registrasi Customer")
+    print(f"{BULLET} 3. Registrasi Driver")
+    print(f"{BULLET} 4. Keluar")
+    print(LINE)
 
-	if data_akun["role"] == "admin":
-		print("\n=== MENU ADMIN ===")
-		print("1. Edit Profil")
-		print("2. Tambah Akun Customer")
-		print("3. Tambah Akun Driver")
-		print("4. Hapus User")
-		print("5. Lihat Daftar Akun")
-		print("6. Logout")
-		print("7. Keluar")
-    
-	elif data_akun["role"] == "customer":
-		print("\n=== MENU CUSTOMER ===")
-		print("1. Edit Profil")
-		print("2. Pesan Ojek")
-		print("3. Logout")
-		print("4. Keluar")
-	
-	elif data_akun["role"] == "driver":
-		print("\n=== MENU DRIVER ===")
-		print("1. Edit Profil")
-		print("2. Lihat pendapatan")
-		print("3. Logout")
-		print("4. Keluar")
+def tampilkan_menu_utama(role):
+    bersihkan_layar()
+    banner(f"Selamat Datang")
+
+    if role == "admin":
+        print(" MENU ADMIN")
+        print(LINE)
+        print(f"{BULLET} 1. Edit Profil")
+        print(f"{BULLET} 2. Tambah Akun Customer")
+        print(f"{BULLET} 3. Tambah Akun Driver")
+        print(f"{BULLET} 4. Hapus User")
+        print(f"{BULLET} 5. Lihat Semua Akun")
+        print(f"{BULLET} 6. Logout")
+        print(f"{BULLET} 7. Keluar")
+        print(LINE)
+
+    elif role == "customer":
+        print("   MENU CUSTOMER")
+        print(LINE)
+        print(f"{BULLET} 1. Edit Profil")
+        print(f"{BULLET} 2. Cek Saldo")
+        print(f"{BULLET} 3. Pesan Ojek")
+        print(f"{BULLET} 4. Logout")
+        print(f"{BULLET} 5. Keluar")
+        print(LINE)
+
+    elif role == "driver":
+        print("   MENU DRIVER")
+        print(LINE)
+        print(f"{BULLET} 1. Edit Profil")
+        print(f"{BULLET} 2. Lihat Pendapatan")
+        print(f"{BULLET} 3. Cek Saldo")
+        print(f"{BULLET} 4. Logout")
+        print(f"{BULLET} 5. Keluar")
+        print(LINE)

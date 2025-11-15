@@ -18,7 +18,6 @@ def hapus_akun():
 	return
 	
 def edit_profil():
-	# Disini edit profil
 	return
 
 def tampilkan_daftar_akun():
@@ -188,7 +187,8 @@ def buat_akun_driver():
 		"umur" : umur,
 		"nomor_telepon" : nomor_telepon,
 		"alamat_email" : alamat_email,
-		"role" : "driver"
+		"role" : "driver",
+		"saldo": "0"
 	}
 	
 	print(f"Akun customer berhasil dibuat! Silahkan login")
@@ -200,3 +200,15 @@ def dapatkan_data_akun(username):
 
 def akun_ada(username):
 	return username in akun
+
+def cek_saldo(username):
+	data = akun.get(username)
+	if data:
+		print("\n=== CEK SALDO ===")
+		print(f"Saldo Anda saat ini: Rp {data['saldo']}")
+		input("Tekan Enter untuk melanjutkan...")
+	else:
+		print("Akun tidak ditemukan!")
+		input("Tekan Enter untuk melanjutkan...")
+
+
