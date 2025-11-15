@@ -18,13 +18,60 @@ def hapus_akun():
 	return
 	
 def edit_profil():
-	# Disini edit profil
+	print("\n=== EDIT PROFIL ===")
+
+	username = input("Masukkan username akun yang ingin diedit: ").strip()
+
+	if username not in akun:
+		print("Akun tidak ditemukan!")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	data = akun[username]
+
+	print(f"\nMengedit profil untuk username: {username}")
+	print("Tekan Enter jika tidak ingin mengubah nilai.")
+
+	
+	nama_baru = input(f"Nama Lengkap ({data['nama_lengkap']}): ").strip()
+	if nama_baru:
+		data["nama_lengkap"] = nama_baru
+
+	
+	umur_baru = input(f"Umur ({data['umur']}): ").strip()
+	if umur_baru:
+		if validasi_input_umur(umur_baru):
+			data["umur"] = umur_baru
+		else:
+			print("Umur tidak valid! Perubahan dibatalkan.")
+
+
+	telp_baru = input(f"Nomor Telepon ({data['nomor_telepon']}): ").strip()
+	if telp_baru:
+		data["nomor_telepon"] = telp_baru
+
+	email_baru = input(f"Alamat Email ({data['alamat_email']}): ").strip()
+	if email_baru:
+		if validasi_input_email(email_baru):
+			data["alamat_email"] = email_baru
+		else:
+			print("Email tidak valid! Perubahan dibatalkan.")
+
+	pass_baru = input("Password baru (kosongkan jika tidak ingin mengubah): ").strip()
+	if pass_baru:
+		data["password"] = pass_baru
+
+	akun[username] = data
+
+	print("\nProfil berhasil diperbarui!")
+	input("Tekan Enter untuk melanjutkan...")
 	return
 
 def tampilkan_daftar_akun():
 	if not akun.items(): 
 		print("Belum ada akun yang terdaftar.")
 		input("Tekan Enter untuk kembali...")
+		return
 
 	table = PrettyTable()
 	table.field_names = ["Username", "Nama Lengkap", "Umur", "Nomor Telepon", "Alamat Email", "Role"]
@@ -188,7 +235,8 @@ def buat_akun_driver():
 		"umur" : umur,
 		"nomor_telepon" : nomor_telepon,
 		"alamat_email" : alamat_email,
-		"role" : "driver"
+		"role" : "driver",
+		"saldo": "0"
 	}
 	
 	print(f"Akun customer berhasil dibuat! Silahkan login")
@@ -200,3 +248,15 @@ def dapatkan_data_akun(username):
 
 def akun_ada(username):
 	return username in akun
+
+def cek_saldo(username):
+	data = akun.get(username)
+	if data:
+		print("\n=== CEK SALDO ===")
+		print(f"Saldo Anda saat ini: Rp {data['saldo']}")
+		input("Tekan Enter untuk melanjutkan...")
+	else:
+		print("Akun tidak ditemukan!")
+		input("Tekan Enter untuk melanjutkan...")
+
+

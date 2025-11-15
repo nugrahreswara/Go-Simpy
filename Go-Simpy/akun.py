@@ -5,7 +5,8 @@ akun = {
 		"umur" : 18,
 		"nomor_telepon" : "081234567890",
 		"alamat_email" : "admin@nugrah.my.id",
-		"role" : "admin"
+		"role" : "admin",
+        "saldo": "0"
 	},
 
 	"driver-01" : {
@@ -14,6 +15,7 @@ akun = {
 		"umur" : 18,
 		"nomor_telepon" : "081234567890",
 		"alamat_email" : "driver-01@nugrah.my.id",
-		"role" : "driver"
+		"role" : "driver",
+        "saldo": "0"
 	}
 }
