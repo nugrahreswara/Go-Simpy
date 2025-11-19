@@ -1,7 +1,6 @@
 from prettytable import PrettyTable
 from akun import akun
-from validasi_input import validasi_input_email
-from validasi_input import validasi_input_umur
+from validasi_input import (email_valid, validasi_input_umur, email_terdaftar, nomor_terdaftar, username_terdaftar)
 
 def hapus_akun():
 	username = input("Masukkan username akun yang akan dihapus: ")
@@ -18,55 +17,90 @@ def hapus_akun():
 	return
 	
 def edit_profil():
-	print("\n=== EDIT PROFIL ===")
-
-	username = input("Masukkan username akun yang ingin diedit: ").strip()
-
-	if username not in akun:
-		print("Akun tidak ditemukan!")
+	username = input("Masukkan username: ").strip
+	if len(username) < 3:
+		print("Username terlalu pandek!, minimal 3 karakter")
+		input("Tekan Enter untuk kembali...")
+		return
+	
+	elif len(username) > 15:
+		print("Username terlalu panjang!, maksimal 15 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	data = akun[username]
-
-	print(f"\nMengedit profil untuk username: {username}")
-	print("Tekan Enter jika tidak ingin mengubah nilai.")
-
+	elif username_terdaftar(username):
+		print("Username sudah ada")
+		input("Tekan Enter untuk kembali...")
+		return
 	
-	nama_baru = input(f"Nama Lengkap ({data['nama_lengkap']}): ").strip()
-	if nama_baru:
-		data["nama_lengkap"] = nama_baru
-
+	password = input("Masukkan password: ")
 	
-	umur_baru = input(f"Umur ({data['umur']}): ").strip()
-	if umur_baru:
-		if validasi_input_umur(umur_baru):
-			data["umur"] = umur_baru
-		else:
-			print("Umur tidak valid! Perubahan dibatalkan.")
+	nama_lengkap = input("Masukkan nama lengkap: ")
+		
+	umur = input("Masukkan umur: ")
+	if not validasi_input_umur(umur):
+		print("Umur tidak valid!")
+		input("Tekan Enter untuk kembali...")
+		return
+		
+	nomor_telepon = int(input("Masukkan nomor telepon: ")).strip()
+	if not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
+		input("Tekan Enter untuk kembali...")
+		return
 
+	elif nomor_terdaftar(nomor_telepon):
+		print("Nomor telepon sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
 
-	telp_baru = input(f"Nomor Telepon ({data['nomor_telepon']}): ").strip()
-	if telp_baru:
-		data["nomor_telepon"] = telp_baru
+	alamat_email = input("Masukkan alamat email: ").strip()
+	bagian_user, bagian_domain = alamat_email.split("@")
 
-	email_baru = input(f"Alamat Email ({data['alamat_email']}): ").strip()
-	if email_baru:
-		if validasi_input_email(email_baru):
-			data["alamat_email"] = email_baru
-		else:
-			print("Email tidak valid! Perubahan dibatalkan.")
+	if not email_valid(alamat_email):
+		print("Format E-Mail tidak valid!\nContoh format yang benar: user@example.com")
+		input("Tekan Enter untuk kembali...")
+		return
 
-	pass_baru = input("Password baru (kosongkan jika tidak ingin mengubah): ").strip()
-	if pass_baru:
-		data["password"] = pass_baru
+	elif email_terdaftar(alamat_email):
+		print("Alamat email sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
 
-	akun[username] = data
+	elif email.count('@' != 1):
+		print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
+		return
+	
+	elif not bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna sebelum '@' tidak boleh kosong.")
+		return
 
-	print("\nProfil berhasil diperbarui!")
-	input("Tekan Enter untuk melanjutkan...")
-	return
+	elif '.' in bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh berisi titik (.).")
+		return
 
+	elif bagian_user.startswith('.') or bagian_user.endswith('.'):
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh mengandung titik berurutan (..).")
+	
+	elif not bagian_domain:
+		print("Format E-Mail tidak valid! Nama domain setelah '@' tidak boleh kosong.")
+		return
+
+	elif '.' not in bagian_domain:
+		print("Format E-Mail tidak valid! Domain harus berisi titik (.) seperti 'domain.com'.")
+		return
+
+	elif bagian_domain.startswith('.') or bagian_domain.endswith('.'):
+		print("Format E-Mail tidak valid! Domain tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Domain tidak boleh mengandung titik berurutan (..).")
+	
 def tampilkan_daftar_akun():
 	if not akun.items(): 
 		print("Belum ada akun yang terdaftar.")
@@ -94,23 +128,23 @@ def tampilkan_daftar_akun():
 def buat_akun_customer():
 	print("=== Registrasi Customer ===")
 
-	username = input("Masukkan username: ")
+	username = input("Masukkan username: ").strip()
 	if not username:
 		print("Username tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if len(username) < 3:
+	elif len(username) < 3:
 		print("Username terlalu pandek!, minimal 3 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
 	
-	if len(username) > 15:
+	elif len(username) > 15:
 		print("Username terlalu panjang!, maksimal 15 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if akun_ada(username):
+	elif username_terdaftar(username):
 		print("Username sudah ada")
 		input("Tekan Enter untuk kembali...")
 		return
@@ -127,30 +161,80 @@ def buat_akun_customer():
 		input("Tekan Enter untuk kembali...")
 		return
 	
-	umur = input("Masukkan umur: ")
+	umur = input("Masukkan umur: ").strip()
 	if not umur:
 		print("Umur tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if not validasi_input_umur(umur):
+	elif not validasi_input_umur(umur):
 		print("Umur tidak valid!")
 		input("Tekan Enter untuk kembali...")
 		return
 		
-	nomor_telepon = input("Masukkan nomor telepon: ")
+	nomor_telepon = input("Masukkan nomor telepon: ").strip()
 	if not nomor_telepon:
 		print("Nomor telepon tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
 		return
 
-	alamat_email = input("Masukkan alamat email: ")
-	if not alamat_email:
-		print("Alamat email tidak boleh kosong")
+	elif not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
+		input("Tekan Enter untuk kembali...")
 		return
 
-	if not validasi_input_email(alamat_email):
+	elif nomor_terdaftar(nomor_telepon):
+		print("Nomor telepon sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	alamat_email = input("Masukkan alamat email: ").strip()
+
+	if not email_valid(alamat_email):
 		print("Format E-Mail tidak valid!\nContoh format yang benar: user@example.com")
+		input("Tekan Enter untuk kembali...")
 		return
+
+	elif email_terdaftar(alamat_email):
+		print("Alamat email sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	elif alamat_email.count('@') != 1:
+		print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
+		return
+
+	bagian_user, bagian_domain = alamat_email.split('@')
+	
+	if not bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna sebelum '@' tidak boleh kosong.")
+		return
+
+	elif '.' in bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh berisi titik (.).")
+		return
+
+	elif bagian_user.startswith('.') or bagian_user.endswith('.'):
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh mengandung titik berurutan (..).")
+	
+	elif not bagian_domain:
+		print("Format E-Mail tidak valid! Nama domain setelah '@' tidak boleh kosong.")
+		return
+
+	elif '.' not in bagian_domain:
+		print("Format E-Mail tidak valid! Domain harus berisi titik (.) seperti 'domain.com'.")
+		return
+
+	elif bagian_domain.startswith('.') or bagian_domain.endswith('.'):
+		print("Format E-Mail tidak valid! Domain tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Domain tidak boleh mengandung titik berurutan (..).")
 
 	akun[username] = {
 		"password" : password,
@@ -167,23 +251,23 @@ def buat_akun_customer():
 
 def buat_akun_driver():
 	print("=== Registrasi Driver ===")
-	username = input("Masukkan username: ")
+	username = input("Masukkan username: ").strip()
 	if not username:
 		print("Username tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if akun_ada(username):
+	elif username_terdaftar(username):
 		print("Username sudah ada")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if len(username) < 3:
+	elif len(username) < 3:
 		print("Username terlalu pandek!, minimal 3 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
 	
-	if len(username) > 15:
+	elif len(username) > 15:
 		print("Username terlalu panjang!, maksimal 15 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
@@ -200,34 +284,80 @@ def buat_akun_driver():
 		input("Tekan Enter untuk kembali...")
 		return
 	
-	umur = input("Masukkan umur: ")
+	umur = input("Masukkan umur: ").strip()
 	if not umur:
 		print("Umur tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if not validasi_input_umur(umur):
+	elif not validasi_input_umur(umur):
 		print("Umur tidak valid!")
 		input("Tekan Enter untuk kembali...")
 		return
 
-		
-	nomor_telepon = input("Masukkan nomor telepon: ")
+	nomor_telepon = input("Masukkan nomor telepon: ").strip()
 	if not nomor_telepon:
 		print("Nomor telepon tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	alamat_email = input("Masukkan alamat email: ")
-	if not alamat_email:
-		print("Alamat email tidak boleh kosong")
+	elif not type(nomor_telepon):
+		print("Nomor telepon hanya dapat diisi dengan angka")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if not validasi_input_email(alamat_email):
+	elif nomor_terdaftar(nomor_telepon):
+		print("Nomor telepon sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	alamat_email = input("Masukkan alamat email: ").strip()
+
+	if not email_valid(alamat_email):
 		print("Format E-Mail tidak valid!\nContoh format yang benar: user@example.com")
 		input("Tekan Enter untuk kembali...")
 		return
+
+	elif email_terdaftar(alamat_email):
+		print("Alamat email sudah terdaftar di akun lain")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	elif alamat_email.count('@') != 1:
+		print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
+		return
+
+	bagian_user, bagian_domain = alamat_email.split('@')
+	
+	if not bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna sebelum '@' tidak boleh kosong.")
+		return
+
+	elif '.' in bagian_user:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh berisi titik (.).")
+		return
+
+	elif bagian_user.startswith('.') or bagian_user.endswith('.'):
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Nama pengguna tidak boleh mengandung titik berurutan (..).")
+	
+	elif not bagian_domain:
+		print("Format E-Mail tidak valid! Nama domain setelah '@' tidak boleh kosong.")
+		return
+
+	elif '.' not in bagian_domain:
+		print("Format E-Mail tidak valid! Domain harus berisi titik (.) seperti 'domain.com'.")
+		return
+
+	elif bagian_domain.startswith('.') or bagian_domain.endswith('.'):
+		print("Format E-Mail tidak valid! Domain tidak boleh diawali atau diakhiri dengan titik.")
+		return
+
+	elif '..' in bagian_domain:
+		print("Format E-Mail tidak valid! Domain tidak boleh mengandung titik berurutan (..).")
 
 	akun[username] = {
 		"password" : password,
@@ -245,9 +375,6 @@ def buat_akun_driver():
 
 def dapatkan_data_akun(username):
 	return akun.get(username)
-
-def akun_ada(username):
-	return username in akun
 
 def cek_saldo(username):
 	data = akun.get(username)
