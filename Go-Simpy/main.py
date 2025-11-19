@@ -3,7 +3,7 @@ import sys
 from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
 from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
-from ewallet import cek_saldo, isi_saldo, bayar_qris
+from ewallet import (cek_saldo, isi_saldo, bayar_qris)
 
 
 def tambah_pendapatan(driver, biaya):

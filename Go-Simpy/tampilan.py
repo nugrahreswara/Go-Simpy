@@ -37,8 +37,9 @@ def tampilkan_menu_utama(role):
         print(f"{BULLET} 3. Tambah Akun Driver")
         print(f"{BULLET} 4. Hapus User")
         print(f"{BULLET} 5. Lihat Semua Akun")
-        print(f"{BULLET} 6. Logout")
-        print(f"{BULLET} 7. Keluar")
+        print(f"{BULLET} 6. Lihat Semua Pendapatan")
+        print(f"{BULLET} 7. Logout")
+        print(f"{BULLET} 8. Keluar")
         print(LINE)
 
     elif role == "customer":
@@ -56,7 +57,8 @@ def tampilkan_menu_utama(role):
         print(LINE)
         print(f"{BULLET} 1. Edit Profil")
         print(f"{BULLET} 2. Cek Saldo")
-        print(f"{BULLET} 3. Lihat Pendapatan")
-        print(f"{BULLET} 4. Logout")
-        print(f"{BULLET} 5. Keluar")
+        print(f"{BULLET} 3. Tarik Pendapatan")
+        print(f"{BULLET} 4. Lihat Pendapatan")
+        print(f"{BULLET} 5. Logout")
+        print(f"{BULLET} 6. Keluar")
         print(LINE)
