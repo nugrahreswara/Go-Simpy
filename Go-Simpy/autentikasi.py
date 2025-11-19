@@ -50,6 +50,3 @@ def apakah_sudah_login():
 def apa_akun_sekarang():
 	global akun_sekarang
 	return akun_sekarang
-
-def akun_sekarang():
-    return username_akun_yang_login
