@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from manajemen_akun import dapatkan_data_akun
 from pendapatan import baca_pendapatan
 
@@ -52,3 +53,24 @@ def tarik_pendapatan(username):
     print(f"Berhasil! Saldo driver bertambah: Rp {total}")
     print(f"Saldo baru: Rp {data['saldo']}")
     input("Enter...")
+=======
+from akun import akun
+
+def jumlah_saldo(username):
+	return akun["saldo"]
+
+def isi_saldo(jumlah):
+	global saldo
+
+	if jumlah > 0:
+		saldo += jumlah
+		print(f"Saldo berhasil ditambahkan. Saldo sekarang: {jumlah_saldo}")
+	else:
+		print("Jumlah isi saldo harus lebih dari 0.")
+
+def cek_saldo():
+	print(f"Saldo Anda saat ini adalah: {jumlah_saldo}")
+
+def bayar_qris():
+	print("Tes")
+>>>>>>> 1d974406ae377da7da34b5023b9646b6a3f6308c

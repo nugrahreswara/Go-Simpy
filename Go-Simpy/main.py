@@ -5,19 +5,9 @@ from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, h
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
 from ewallet import (cek_saldo, isi_saldo, bayar_qris)
 
-
-def tambah_pendapatan(driver, biaya):
-	print(f"Pendapatan untuk driver {driver} bertambah sebesar {biaya}.")
-
-def pesan_ojol():
-	driver = input("Masukkan username driver: ")
-	biaya = int(input("Masukkan biaya: "))
-	tambah_pendapatan(driver, biaya)
-
-
 def pilihan_menu_admin():
 	while True:
-		tampilkan_menu_utama(role)
+		tampilkan_menu_utama()
 		pilihan = input("Pilih menu: ").strip()
 		if pilihan == "1":
 			edit_profil()
@@ -49,7 +39,7 @@ def pilihan_menu_admin():
 
 def pilihan_menu_customer():
 	while True:
-		tampilkan_menu_utama(role)
+		tampilkan_menu_utama()
 		pilihan = input("Pilih menu: ").strip()
 
 		if pilihan == "1":
@@ -91,20 +81,23 @@ def pilihan_menu_customer():
 
 def pilihan_menu_driver():
 	while True:
-		tampilkan_menu_utama(role)
+		tampilkan_menu_utama()
 		pilihan = input("Pilih menu: ").strip()
 
 		if pilihan == "1":
 			edit_profil()
 
 		elif pilihan == "2":
-			pesan_ojol()
+			cek_saldo()
 
 		elif pilihan == "3":
+			lihat_pendapatan()
+
+		elif pilihan == "4":
 			logout()
 			break
 
-		elif pilihan == "4":
+		elif pilihan == "5":
 			print("Terimakasih telah menggunakan program ini.")
 			sys.exit()
 
@@ -139,7 +132,7 @@ if __name__ == "__main__":
 		else:
 			username = apa_akun_sekarang()
 			role = dapatkan_data_akun(username)["role"]
-
+			
 			if role == "admin":
 				pilihan_menu_admin()
 
