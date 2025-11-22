@@ -3,7 +3,6 @@ import sys
 from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
 from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
-from ewallet import cek_saldo, isi_saldo, bayar_qris
 
 def pilihan_menu_admin():
 	while True:
@@ -130,8 +129,8 @@ if __name__ == "__main__":
 				input("Tekan Enter untuk kembali")
 
 		else:
-			username = apa_akun_sekarang()
-			role = dapatkan_data_akun(username)["role"]
+			# username = apa_akun_sekarang()
+			role = dapatkan_data_akun(apa_akun_sekarang())["role"]
 			
 			if role == "admin":
 				pilihan_menu_admin()

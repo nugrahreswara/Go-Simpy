@@ -6,7 +6,6 @@ akun = {
 		"nomor_telepon" : "0812345678901",
 		"alamat_email" : "admin@nugrah.my.id",
 		"role" : "admin",
-		"saldo": 0
 	},
 
 	"customer-01" : {
@@ -16,7 +15,6 @@ akun = {
 		"nomor_telepon" : "0812345678902",
 		"alamat_email" : "customer-01@nugrah.my.id",
 		"role" : "customer",
-		"saldo": 0
 	},
 
 	"driver-01" : {
@@ -26,6 +24,5 @@ akun = {
 		"nomor_telepon" : "0812345678903",
 		"alamat_email" : "driver-01@nugrah.my.id",
 		"role" : "driver",
-		"saldo": 0
 	}
 }
