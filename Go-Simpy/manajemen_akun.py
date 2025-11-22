@@ -90,7 +90,7 @@ def edit_profil():
 		input("Tekan Enter untuk kembali...")
 		return
 
-	elif email.count('@' != 1):
+	elif alamat_email.count('@') != 1:
 		print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
 		return
 	

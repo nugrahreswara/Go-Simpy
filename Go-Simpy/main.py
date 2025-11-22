@@ -3,6 +3,7 @@ import sys
 from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
 from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
+from pendapatan import lihat_pendapatan 
 
 def pilihan_menu_admin():
 	while True:
@@ -45,31 +46,13 @@ def pilihan_menu_customer():
 			edit_profil()
 
 		elif pilihan == "2":
-			cek_saldo(username)
-
+			pesan_ojek()
+		
 		elif pilihan == "3":
-			try:
-				jumlah = int(input("Masukkan jumlah isi saldo: "))
-			except ValueError:
-				print("Nominal harus berupa angka.")
-				input("Tekan Enter untuk kembali")
-				continue
-			isi_saldo(username, jumlah)
-
-		elif pilihan == "4":
-			try:
-				jumlah = int(input("Masukkan nominal QRIS: "))
-			except ValueError:
-				print("Nominal harus berupa angka.")
-				input("Tekan Enter untuk kembali")
-				continue
-			bayar_qris(username, jumlah)
-
-		elif pilihan == "5":
 			logout()
 			break
 
-		elif pilihan == "6":
+		elif pilihan == "4":
 			print("Terimakasih telah menggunakan program ini.")
 			sys.exit()
 
@@ -80,23 +63,20 @@ def pilihan_menu_customer():
 
 def pilihan_menu_driver():
 	while True:
-		tampilkan_menu_utama()
+		tampilkan_menu_utama(role)
 		pilihan = input("Pilih menu: ").strip()
 
 		if pilihan == "1":
 			edit_profil()
 
 		elif pilihan == "2":
-			cek_saldo()
-
-		elif pilihan == "3":
 			lihat_pendapatan()
 
-		elif pilihan == "4":
+		elif pilihan == "3":
 			logout()
 			break
 
-		elif pilihan == "5":
+		elif pilihan == "4":
 			print("Terimakasih telah menggunakan program ini.")
 			sys.exit()
 

@@ -3,9 +3,9 @@ akun = {
 		"password" : "admin",
 		"nama_lengkap" : "Administrator",
 		"umur" : 18,
-		"nomor_telepon" : "0812345678901",
+		"no_telepon" : "085349095718",
 		"alamat_email" : "admin@nugrah.my.id",
-		"role" : "admin",
+		"role": "admin"
 	},
 
 	"customer-01" : {
@@ -16,13 +16,13 @@ akun = {
 		"alamat_email" : "customer-01@nugrah.my.id",
 		"role" : "customer",
 	},
-
+    
 	"driver-01" : {
 		"password" : "driver-01",
 		"nama_lengkap" : "Herman Sanjaya",
 		"umur" : 18,
-		"nomor_telepon" : "0812345678903",
+		"no_telepon" : "08234597487493",
 		"alamat_email" : "driver-01@nugrah.my.id",
-		"role" : "driver",
+		"role": "driver"
 	}
 }
