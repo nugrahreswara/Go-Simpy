@@ -1,16 +1,22 @@
 import csv
+from prettytable import PrettyTable
 
-CSV_FILE = "pendapatan.csv"
-
-def baca_pendapatan(username_driver):
+def lihat_pendapatan(file_csv="Data.csv"):
     data = []
-    try:
-        with open(CSV_FILE, "r") as file:
-            reader = csv.reader(file)
-            for row in reader:
-                if row[0] == username_driver:
-                    data.append(row)
-    except FileNotFoundError:
-        open(CSV_FILE, "w").close()
+    with open(file_csv, newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            data.append(row)
 
-    return data
+    table = PrettyTable()
+    table.field_names = ["Waktu Pesan", "Nama Pelanggan", "Biaya Didapat"]
+
+    total_biaya = 0
+    for row in data:
+        biaya = int(row["biaya_didapat"])
+        total_biaya += biaya
+        table.add_row([row["waktu_pesan"], row["nama_pelanggan"], biaya])
+
+    print(table)
+    print("Total pendapatan semua pelanggan: Rp {:,}".format(total_biaya).replace(",", "."))
+    input("\nTekan Enter untuk kembali ke menu...")
