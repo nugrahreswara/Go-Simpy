@@ -17,7 +17,7 @@ def validasi_input_umur(umur):
 		return None
 
 def email_valid(email):
-	return "@" in email and "." in email
+	return "@" in email and "." in email 
 
 def nomor_terdaftar(nomor_telepon):
 	for data in akun.values():

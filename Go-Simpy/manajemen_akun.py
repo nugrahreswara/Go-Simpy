@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 from akun import akun
 from validasi_input import (email_valid, validasi_input_umur, email_terdaftar, nomor_terdaftar, username_terdaftar)
+from autentikasi import apa_akun_sekarang
 
 def hapus_akun():
 	username = input("Masukkan username akun yang akan dihapus: ")
@@ -17,26 +18,48 @@ def hapus_akun():
 	return
 	
 def edit_profil():
-	username = input("Masukkan username: ").strip
-	if len(username) < 3:
-		print("Username terlalu pandek!, minimal 3 karakter")
-		input("Tekan Enter untuk kembali...")
-		return
+	print("===Edit Profil===")
+	print("===Kosongkan jika tidak ingin mengubah!===")
+	from akun import akun
+	data_akun = akun[apa_akun_sekarang()]
+	username = input("Masukkan username baru: ").strip() or None
+	if username is not None:
+		if len(username) < 3:
+			print("Username terlalu pandek!, minimal 3 karakter")
+			input("Tekan Enter untuk kembali...")
+			return
+		
+		elif len(username) > 15:
+			print("Username terlalu panjang!, maksimal 15 karakter")
+			input("Tekan Enter untuk kembali...")
+			return
+
+		elif username_terdaftar(username):
+			print("Username sudah ada")
+			input("Tekan Enter untuk kembali...")
+			return
+		
+		elif not username[0].isalpha():
+			print("Username harus diawali dengan huruf!")
+			input("Tekan Enter untuk kembali...")
+			return
+			
+		elif not username.replace('_','').replace('-','').isalnum():
+			print("Username hanya boleh berisi huruf, angka, underscore(_), atau tanda hubung (-)!")
+			input("Tekan Enter untuk kembali...")
+			return
+
+		else:
+			data_akun["nama_lengkap"] = username
 	
-	elif len(username) > 15:
-		print("Username terlalu panjang!, maksimal 15 karakter")
+	password = input("Masukkan password baru: ")
+	
+	nama_lengkap = input("Masukkan nama lengkap baru: ")
+	if not nama_lengkap.isalpha():
+		print("Nama lengkap hanya boleh diisi dengan huruf!")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	elif username_terdaftar(username):
-		print("Username sudah ada")
-		input("Tekan Enter untuk kembali...")
-		return
-	
-	password = input("Masukkan password: ")
-	
-	nama_lengkap = input("Masukkan nama lengkap: ")
-		
 	umur = input("Masukkan umur: ")
 	if not validasi_input_umur(umur):
 		print("Umur tidak valid!")
@@ -129,16 +152,17 @@ def buat_akun_customer():
 	print("=== Registrasi Customer ===")
 
 	username = input("Masukkan username: ").strip()
+
 	if not username:
 		print("Username tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
-	elif len(username) < 3:
-		print("Username terlalu pandek!, minimal 3 karakter")
-		input("Tekan Enter untuk kembali...")
-		return
-	
+	if len(username) < 3:
+			print("Username terlalu pandek!, minimal 3 karakter")
+			input("Tekan Enter untuk kembali...")
+			return
+		
 	elif len(username) > 15:
 		print("Username terlalu panjang!, maksimal 15 karakter")
 		input("Tekan Enter untuk kembali...")
@@ -148,7 +172,17 @@ def buat_akun_customer():
 		print("Username sudah ada")
 		input("Tekan Enter untuk kembali...")
 		return
-	
+		
+	elif not username[0].isalpha():
+		print("Username harus diawali dengan huruf!")
+		input("Tekan Enter untuk kembali...")
+		return
+			
+	elif not username.replace('_','').replace('-','').isalnum():
+		print("Username hanya boleh berisi huruf, angka, underscore(_), atau tanda hubung (-)!")
+		input("Tekan Enter untuk kembali...")
+		return
+
 	password = input("Masukkan password: ")
 	if not password:
 		print("Password tidak boleh kosong")
@@ -158,6 +192,11 @@ def buat_akun_customer():
 	nama_lengkap = input("Masukkan nama lengkap: ")
 	if not nama_lengkap:
 		print("Nama lengkap tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	if not nama_lengkap.isalpha():
+		print("Nama lengkap hanya boleh diisi dengan huruf!")
 		input("Tekan Enter untuk kembali...")
 		return
 	
@@ -252,8 +291,19 @@ def buat_akun_customer():
 def buat_akun_driver():
 	print("=== Registrasi Driver ===")
 	username = input("Masukkan username: ").strip()
+
 	if not username:
 		print("Username tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	if len(username) < 3:
+			print("Username terlalu pandek!, minimal 3 karakter")
+			input("Tekan Enter untuk kembali...")
+			return
+		
+	elif len(username) > 15:
+		print("Username terlalu panjang!, maksimal 15 karakter")
 		input("Tekan Enter untuk kembali...")
 		return
 
@@ -261,17 +311,17 @@ def buat_akun_driver():
 		print("Username sudah ada")
 		input("Tekan Enter untuk kembali...")
 		return
+		
+	elif not username[0].isalpha():
+		print("Username harus diawali dengan huruf!")
+		input("Tekan Enter untuk kembali...")
+		return
+			
+	elif not username.replace('_','').replace('-','').isalnum():
+		print("Username hanya boleh berisi huruf, angka, underscore(_), atau tanda hubung (-)!")
+		input("Tekan Enter untuk kembali...")
+		return
 
-	elif len(username) < 3:
-		print("Username terlalu pandek!, minimal 3 karakter")
-		input("Tekan Enter untuk kembali...")
-		return
-	
-	elif len(username) > 15:
-		print("Username terlalu panjang!, maksimal 15 karakter")
-		input("Tekan Enter untuk kembali...")
-		return
-	
 	password = input("Masukkan password: ")
 	if not password:
 		print("Password tidak boleh kosong")
@@ -281,6 +331,11 @@ def buat_akun_driver():
 	nama_lengkap = input("Masukkan nama lengkap: ")
 	if not nama_lengkap:
 		print("Nama lengkap tidak boleh kosong")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	if not nama_lengkap.isalpha():
+		print("Nama lengkap hanya boleh diisi dengan huruf!")
 		input("Tekan Enter untuk kembali...")
 		return
 	
@@ -366,7 +421,6 @@ def buat_akun_driver():
 		"nomor_telepon" : nomor_telepon,
 		"alamat_email" : alamat_email,
 		"role" : "driver",
-		"saldo": "0"
 	}
 	
 	print(f"Akun customer berhasil dibuat! Silahkan login")
@@ -375,15 +429,3 @@ def buat_akun_driver():
 
 def dapatkan_data_akun(username):
 	return akun.get(username)
-
-def cek_saldo(username):
-	data = akun.get(username)
-	if data:
-		print("\n=== CEK SALDO ===")
-		print(f"Saldo Anda saat ini: Rp {data['saldo']}")
-		input("Tekan Enter untuk melanjutkan...")
-	else:
-		print("Akun tidak ditemukan!")
-		input("Tekan Enter untuk melanjutkan...")
-
-
