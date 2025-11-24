@@ -19,7 +19,8 @@ def validasi_input_umur(umur):
 def email_valid(email):
 	return "@" in email and "." in email 
 
-def nomor_terdaftar(nomor_telepon):
+def nomor_terdaftar(nomor_string):
+	nomor_telepon = int(nomor_string)
 	for data in akun.values():
 		if data.get("nomor_telepon") == nomor_telepon:
 			return True

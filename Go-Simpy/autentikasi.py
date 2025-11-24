@@ -38,7 +38,6 @@ def logout():
 	global sudah_login, akun_sekarang
 	sudah_login = False
 	akun_sekarang = None
-	print(f"Troubleshoot: Sudah Login: {sudah_login}")
 	print("Anda telah logout, silahkan login kembali")
 	input("Tekan Enter untuk kembali...")	
 	return
