@@ -7,7 +7,7 @@ from pendapatan import lihat_pendapatan
 
 def pilihan_menu_admin():
 	while True:
-		tampilkan_menu_utama()
+		tampilkan_menu_utama(role)
 		pilihan = input("Pilih menu: ").strip()
 		if pilihan == "1":
 			edit_profil()
@@ -25,10 +25,13 @@ def pilihan_menu_admin():
 			tampilkan_daftar_akun()
 	
 		elif pilihan == "6":
+			lihat_semua_pendapatan()
+
+		elif pilihan == "7":
 			logout()
 			break
 
-		elif pilihan == "7":
+		elif pilihan == "8":
 			print("Terimakasih telah menggunakan program ini.")
 			sys.exit()
 
@@ -39,7 +42,7 @@ def pilihan_menu_admin():
 
 def pilihan_menu_customer():
 	while True:
-		tampilkan_menu_utama()
+		tampilkan_menu_utama(role)
 		pilihan = input("Pilih menu: ").strip()
 
 		if pilihan == "1":

@@ -34,7 +34,7 @@ def tampilkan_menu_utama(role):
         print(f"{BULLET} 1. Edit Profil")
         print(f"{BULLET} 2. Tambah Akun Customer")
         print(f"{BULLET} 3. Tambah Akun Driver")
-        print(f"{BULLET} 4. Hapus User")
+        print(f"{BULLET} 4. Hapus Akun")
         print(f"{BULLET} 5. Lihat Semua Akun")
         print(f"{BULLET} 6. Lihat Semua Pendapatan")
         print(f"{BULLET} 7. Logout")
