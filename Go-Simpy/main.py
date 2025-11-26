@@ -4,6 +4,45 @@ from autentikasi import (login, logout, apakah_sudah_login, apa_akun_sekarang)
 from manajemen_akun import (edit_profil, buat_akun_customer, buat_akun_driver, hapus_akun, dapatkan_data_akun, tampilkan_daftar_akun)
 from tampilan import (tampilkan_menu_login, tampilkan_menu_utama)
 from pendapatan import lihat_pendapatan 
+import time
+import random
+from tampilan import DOUBLE_LINE
+
+def pesan_ojek():
+    DOUBLE_LINE("PESAN OJEK")
+    print()
+    lokasi = input("Lokasi penjemputan : ")
+    tujuan = input("Tujuan perjalanan  : ")
+
+    print("\nDetail Pesanan")
+    print("-" * 30)
+    print(f"- Lokasi Jemput : {lokasi}")
+    print(f"- Tujuan        : {tujuan}")
+    print("-" * 30)
+
+    confirm = input("Pesan ojek? (y/n): ").strip().lower()
+
+    if confirm == "y":
+        drivers = ["Agung", "Budi", "Rama", "Tono", "Fajar"]
+        motor = ["Vario 125", "Beat Street", "NMax", "Scoopy", "Aerox"]
+        selected_driver = random.choice(drivers)
+        selected_motor = random.choice(motor)
+        biaya = random.randint(10000, 20000)
+
+        print("\nMencari driver", end="")
+        for _ in range(3):
+            print(".", end="", flush=True)
+            time.sleep(0.5)
+
+        print(f"\n\nDriver ditemukan!")
+        print(f"- Nama Driver : {selected_driver}")
+        print(f"- Motor       : {selected_motor}")
+        print(f"- Harga       : Rp {biaya:,}")
+        print("\nDriver sedang menuju lokasi Anda!")
+    else:
+        print("\nPesanan dibatalkan.")
+
+    input("\nTekan Enter untuk kembali ke menu...")
 
 def pilihan_menu_admin():
 	while True:
@@ -109,7 +148,6 @@ if __name__ == "__main__":
 				input("Tekan Enter untuk kembali")
 
 		else:
-			# username = apa_akun_sekarang()
 			role = dapatkan_data_akun(apa_akun_sekarang())["role"]
 			
 			if role == "admin":
