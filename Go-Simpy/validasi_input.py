@@ -19,7 +19,8 @@ def validasi_input_umur(umur):
 def email_valid(email):
 	return "@" in email and "." in email 
 
-def nomor_terdaftar(nomor_telepon):
+def nomor_terdaftar(nomor_string):
+	nomor_telepon = int(nomor_string)
 	for data in akun.values():
 		if data.get("nomor_telepon") == nomor_telepon:
 			return True
@@ -34,3 +35,15 @@ def email_terdaftar(alamat_email):
 def username_terdaftar(username):
 	return username in akun
 
+def validasi_input_jarak(jarak):
+	try:
+		jarak = float(jarak)
+		jarak = round(jarak, 1)
+		if jarak <= 0:
+			print("Jarak harus lebih dari 0.0!")
+			return None
+
+	except ValueError:
+		print("Mohon masukkan jarak yang valid (contoh 2.5, 10, 0.8)")
+		input("Tekan Enter untuk kembali...")
+		return None

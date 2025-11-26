@@ -19,8 +19,8 @@ def login():
 		if username in akun and akun[username]["password"] == password:
 			sudah_login = True
 			akun_sekarang = username
-			bersihkan_layar()
-			print("Login berhasil!")
+			print(akun.get(akun_sekarang)["role"])
+			print("\nLogin berhasil!")
 			input("\nTekan Enter untuk melanjutkan...")
 			return True
       
@@ -32,13 +32,12 @@ def login():
 			else:
 				print("Anda telah gagal login sebanyak 5 kali. Program akan dihentikan")
 				sys.exit()
-	return False
+	return
 			
 def logout():
 	global sudah_login, akun_sekarang
 	sudah_login = False
 	akun_sekarang = None
-	print(f"Troubleshoot: Sudah Login: {sudah_login}")
 	print("Anda telah logout, silahkan login kembali")
 	input("Tekan Enter untuk kembali...")	
 	return
