@@ -15,15 +15,16 @@ def hapus_akun():
 			return
 
 		else:
-			print(f"Anda akan menghapus akun: {username}")
+			print(f"\nAnda akan menghapus akun: {username}")
 			print(f"Nama lengkap: {akun[username]['nama_lengkap']}")
 			print(f"Role: {akun[username]['role']}")
 			print(f"Nomor Telepon: {akun[username]['nomor_telepon']}")
-			print(f"Alamat E-Mail: {akun[username]['alamat_email']}")
+			print(f"Alamat E-Mail: {akun[username]['alamat_email']}\n")
+
 			konfirmasi = input("Apakah anda yakin ingin menghapus akun: {username}? (y/t): ").strip().lower()
 
 			if konfirmasi == "y":
-				print(f"Akun {username} berhasil dihapus!")
+				print(f"\nAkun {username} berhasil dihapus!")
 				input("Tekan Enter untuk melanjutkan...")
 				del akun[username]
 
@@ -288,7 +289,7 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 
-	elif not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+	elif not nomor_telepon.isdigit() or not len(nomor_telepon) >= 10:
 		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
 		input("Tekan Enter untuk kembali...")
 		return

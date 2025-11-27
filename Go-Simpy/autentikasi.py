@@ -12,14 +12,13 @@ def login():
 
 	while percobaan < maksimal_percobaan:
 		bersihkan_layar()
-		print("=== LOGIN ===")
+		print("=== LOGIN ===\n")
 		username = input("Masukkan Username: ").strip()
 		password = input("Masukkan Password: ").strip()
         
 		if username in akun and akun[username]["password"] == password:
 			sudah_login = True
 			akun_sekarang = username
-			print(akun.get(akun_sekarang)["role"])
 			print("\nLogin berhasil!")
 			input("\nTekan Enter untuk melanjutkan...")
 			return True
