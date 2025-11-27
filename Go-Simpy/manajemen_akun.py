@@ -4,6 +4,8 @@ from validasi_input import (email_valid, validasi_input_umur, email_terdaftar, n
 from autentikasi import apa_akun_sekarang
 
 def hapus_akun():
+	tampilkan_daftar_akun()
+	print()
 	username = input("Masukkan username akun yang akan dihapus: ")
 
 	if username in akun:
@@ -175,7 +177,6 @@ def tampilkan_daftar_akun():
 	print("\n=== DAFTAR AKUN ===")
 	print(table)
 	input("Tekan Enter untuk melanjutkan...")
-	return
 
 def buat_akun(pilihan):
 	print("=== Proses pembuatan akun ===")
@@ -224,10 +225,12 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 
-	if not nama_lengkap.isalpha():
-		print("Nama lengkap hanya boleh diisi dengan huruf!")
+	if not all(kata.isalpha() for kata in nama_lengkap.split()):
+		print("Nama hanya boleh berisi huruf dan spasi. Input tidak valid.")
 		input("Tekan Enter untuk kembali...")
 		return
+
+	nama_lengkap = nama_lengkap.title()
 	
 	umur = input("Masukkan umur: ").strip()
 	if not umur:
