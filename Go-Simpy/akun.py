@@ -3,7 +3,7 @@ akun = {
 		"password" : "admin",
 		"nama_lengkap" : "Administrator",
 		"umur" : 18,
-		"nomor_telepon" : "085349095718",
+		"nomor_telepon" : "0812345678901",
 		"alamat_email" : "admin@nugrah.my.id",
 		"role": "admin"
 	},
@@ -21,7 +21,7 @@ akun = {
 		"password" : "driver-01",
 		"nama_lengkap" : "Herman Sanjaya",
 		"umur" : 18,
-		"nomor_telepon" : "08234597487493",
+		"nomor_telepon" : "0812345678903",
 		"alamat_email" : "driver-01@nugrah.my.id",
 		"role": "driver"
 	}
