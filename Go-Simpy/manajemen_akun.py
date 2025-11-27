@@ -289,7 +289,7 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 
-	elif not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+	elif not nomor_telepon.isdigit() or not len(nomor_telepon) >= 10:
 		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
 		input("Tekan Enter untuk kembali...")
 		return
