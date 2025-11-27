@@ -9,9 +9,28 @@ def hapus_akun():
 	username = input("Masukkan username akun yang akan dihapus: ")
 
 	if username in akun:
-		print(f"Akun {username} berhasil dihapus!")
-		input("Tekan Enter untuk melanjutkan...")
-		del akun[username] 
+		if akun[username]["role"] == "admin":
+			print("Tidak dapat menghapus akun dengan role admin!")
+			input("Tekan Enter untuk kembali...")
+			return
+
+		else:
+			print(f"Anda akan menghapus akun: {username}")
+			print(f"Nama lengkap: {akun[username]['nama_lengkap']}")
+			print(f"Role: {akun[username]['role']}")
+			print(f"Nomor Telepon: {akun[username]['nomor_telepon']}")
+			print(f"Alamat E-Mail: {akun[username]['alamat_email']}")
+			konfirmasi = input("Apakah anda yakin ingin menghapus akun: {username}? (y/t): ").strip().lower()
+
+			if konfirmasi == "y":
+				print(f"Akun {username} berhasil dihapus!")
+				input("Tekan Enter untuk melanjutkan...")
+				del akun[username]
+
+			else:
+				print("Penghapusan akun dibatalkan")
+				input("Tekan Enter untuk kembali...")
+				return
 
 	else:
 		print("Username tidak ditemukan!")
@@ -114,24 +133,30 @@ def edit_profil():
 
 		elif alamat_email.count('@') != 1:
 			print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		bagian_user, bagian_domain = alamat_email.split("@")
 		
 		if not bagian_user:
 			print("Format E-Mail tidak valid! Nama pengguna sebelum '@' tidak boleh kosong.")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		elif '.' in bagian_user:
 			print("Format E-Mail tidak valid! Nama pengguna tidak boleh berisi titik (.).")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		elif bagian_user.startswith('.') or bagian_user.endswith('.'):
 			print("Format E-Mail tidak valid! Nama pengguna tidak boleh diawali atau diakhiri dengan titik.")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		elif '..' in bagian_domain:
 			print("Format E-Mail tidak valid! Nama pengguna tidak boleh mengandung titik berurutan (..).")
+			input("Tekan Enter untuk kembali...")
+			return
 		
 		elif not bagian_domain:
 			print("Format E-Mail tidak valid! Nama domain setelah '@' tidak boleh kosong.")
@@ -139,14 +164,18 @@ def edit_profil():
 
 		elif '.' not in bagian_domain:
 			print("Format E-Mail tidak valid! Domain harus berisi titik (.) seperti 'domain.com'.")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		elif bagian_domain.startswith('.') or bagian_domain.endswith('.'):
 			print("Format E-Mail tidak valid! Domain tidak boleh diawali atau diakhiri dengan titik.")
+			input("Tekan Enter untuk kembali...")
 			return
 
 		elif '..' in bagian_domain:
 			print("Format E-Mail tidak valid! Domain tidak boleh mengandung titik berurutan (..).")
+			input("Tekan Enter untuk kembali...")
+			return
 
 		else:
 			data_akun["alamat_email"] = alamat_email
@@ -181,6 +210,7 @@ def tampilkan_daftar_akun():
 def buat_akun(pilihan):
 	print("=== Proses pembuatan akun ===")
 
+	# Username
 	username = input("Masukkan username: ").strip()
 
 	if not username:
@@ -213,12 +243,14 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 
+	# Password
 	password = input("Masukkan password: ")
 	if not password:
 		print("Password tidak boleh kosong")
 		input("Tekan Enter untuk kembali...")
 		return
 
+	# Nama Lengkap
 	nama_lengkap = input("Masukkan nama lengkap: ")
 	if not nama_lengkap:
 		print("Nama lengkap tidak boleh kosong")
@@ -232,6 +264,7 @@ def buat_akun(pilihan):
 
 	nama_lengkap = nama_lengkap.title()
 	
+	# Umur
 	umur = input("Masukkan umur: ").strip()
 	if not umur:
 		print("Umur tidak boleh kosong")
@@ -243,14 +276,10 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 		
+	# Nomor Telepon
 	nomor_telepon = input("Masukkan nomor telepon: ").strip()
 	if not nomor_telepon:
 		print("Nomor telepon tidak boleh kosong")
-		input("Tekan Enter untuk kembali...")
-		return
-
-	elif not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
-		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
 		input("Tekan Enter untuk kembali...")
 		return
 
@@ -259,6 +288,12 @@ def buat_akun(pilihan):
 		input("Tekan Enter untuk kembali...")
 		return
 
+	elif not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+		print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
+		input("Tekan Enter untuk kembali...")
+		return
+
+	# Alamat E-Mail
 	alamat_email = input("Masukkan alamat email: ").strip()
 
 	if not email_valid(alamat_email):
@@ -273,39 +308,50 @@ def buat_akun(pilihan):
 
 	elif alamat_email.count('@') != 1:
 		print("Format E-Mail tidak valid! Harus berisi satu tanda '@'.")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	bagian_user, bagian_domain = alamat_email.split('@')
 	
 	if not bagian_user:
 		print("Format E-Mail tidak valid! Nama pengguna sebelum '@' tidak boleh kosong.")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	elif '.' in bagian_user:
 		print("Format E-Mail tidak valid! Nama pengguna tidak boleh berisi titik (.).")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	elif bagian_user.startswith('.') or bagian_user.endswith('.'):
 		print("Format E-Mail tidak valid! Nama pengguna tidak boleh diawali atau diakhiri dengan titik.")
+		input("Tekan Enter untuk kembali...")
 		return
 
-	elif '..' in bagian_domain:
+	elif '..' in bagian_user:
 		print("Format E-Mail tidak valid! Nama pengguna tidak boleh mengandung titik berurutan (..).")
+		input("Tekan Enter untuk kembali...")
+		return
 	
 	elif not bagian_domain:
 		print("Format E-Mail tidak valid! Nama domain setelah '@' tidak boleh kosong.")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	elif '.' not in bagian_domain:
 		print("Format E-Mail tidak valid! Domain harus berisi titik (.) seperti 'domain.com'.")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	elif bagian_domain.startswith('.') or bagian_domain.endswith('.'):
 		print("Format E-Mail tidak valid! Domain tidak boleh diawali atau diakhiri dengan titik.")
+		input("Tekan Enter untuk kembali...")
 		return
 
 	elif '..' in bagian_domain:
 		print("Format E-Mail tidak valid! Domain tidak boleh mengandung titik berurutan (..).")
+		input("Tekan Enter untuk kembali...")
+		return
 
 
 	if pilihan == "2":	
