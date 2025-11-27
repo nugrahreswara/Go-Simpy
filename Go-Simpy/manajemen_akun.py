@@ -106,7 +106,7 @@ def edit_profil():
 	# Nomor Telepon
 	nomor_telepon = input(f"Masukkan nomor telepon baru ({data_akun['nomor_telepon']}): ").strip() or None
 	if nomor_telepon is not None:
-		if not nomor_telepon.isdigit() and not len(nomor_telepon) >= 10:
+		if not nomor_telepon.isdigit() or not len(nomor_telepon) >= 10:
 			print("Nomor telepon tidak valid! Harus berisi angka dan minimal 10 digit.")
 			input("Tekan Enter untuk kembali...")
 			return
